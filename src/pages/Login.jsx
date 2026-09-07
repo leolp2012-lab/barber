@@ -6,32 +6,40 @@ function Login({ setUser }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    setErrorMessage("");
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:3000/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          senha: password,
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        if (data.token) localStorage.setItem("token", data.token);
-        setUser(data.user?.name || data.user || email.split("@")[0]);
+        setUser(data.nome || email.split("@")[0]);
         navigate("/");
       } else {
-        alert(data.message || "E-mail ou senha incorretos!");
+        setErrorMessage(data.erro || "E-mail ou senha incorretos.");
       }
     } catch (error) {
-      console.warn("Backend offline. Entrando em modo teste...");
-      setUser(email.split("@")[0]);
-      navigate("/");
+      console.error("Erro ao conectar com o backend:", error);
+      setErrorMessage(
+        "Não foi possível conectar ao servidor. Verifique se o backend está rodando.",
+      );
     } finally {
       setLoading(false);
     }
@@ -40,14 +48,20 @@ function Login({ setUser }) {
   return (
     <div className="login-container">
       <div className="login-card">
-        <Link to="/" className="back-arrow">←</Link>
+        <Link to="/" className="back-arrow">
+          ←
+        </Link>
 
         <h2>Entrar</h2>
+
         <p className="subtitle">Acesse sua conta para realizar agendamentos</p>
+
+        {errorMessage && <div className="error-banner">{errorMessage}</div>}
 
         <form onSubmit={handleLogin}>
           <div className="input-group">
             <label>E-MAIL</label>
+
             <input
               type="email"
               value={email}
@@ -59,6 +73,7 @@ function Login({ setUser }) {
 
           <div className="input-group">
             <label>SENHA</label>
+
             <div className="password-wrapper">
               <input
                 type={showPassword ? "text" : "password"}
@@ -67,6 +82,7 @@ function Login({ setUser }) {
                 placeholder="Digite sua senha"
                 required
               />
+
               <button
                 type="button"
                 className="toggle-eye"
@@ -78,7 +94,7 @@ function Login({ setUser }) {
           </div>
 
           <button type="submit" className="confirm-btn" disabled={loading}>
-            {loading ? "Carregando..." : "Entrar"}
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
 

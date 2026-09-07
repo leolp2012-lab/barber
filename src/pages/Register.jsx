@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Register({ setUser }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [telefone, setTelefone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -16,28 +17,43 @@ function Register({ setUser }) {
     e.preventDefault();
     setErrorMessage("");
 
+    console.log("Senha:", password);
+    console.log("Confirmar senha:", confirmPassword);
+
     if (password !== confirmPassword) {
       setErrorMessage("As senhas não coincidem!");
       return;
     }
-
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/register", {
+      console.log("Dados enviados:", {
+        nome: name,
+        email: email,
+        telefone: telefone,
+        senha: password,
+      });
+
+      const response = await fetch("http://localhost:3000/clientes", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome: name,
+          email: email,
+          telefone: telefone,
+          senha: password,
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setUser(data.user?.name || name);
+        setUser(data.nome || name);
         navigate("/");
       } else {
-        // Mensagem profissional vinda do backend ou customizada
-        setErrorMessage(data.message || "Este e-mail já está cadastrado.");
+        setErrorMessage(data.erro || "Erro ao cadastrar usuário.");
       }
     } catch (error) {
       console.warn("Backend offline. Cadastrando no modo teste...");
@@ -51,10 +67,14 @@ function Register({ setUser }) {
   return (
     <div className="login-container">
       <div className="login-card">
-        <Link to="/" className="back-arrow">←</Link>
+        <Link to="/" className="back-arrow">
+          ←
+        </Link>
 
         <h2>Cadastro</h2>
-        <p className="subtitle">Crie uma conta para gerenciar seus agendamentos</p>
+        <p className="subtitle">
+          Crie uma conta para gerenciar seus agendamentos
+        </p>
 
         {/* Caixa de Erro Profissional */}
         {errorMessage && <div className="error-banner">{errorMessage}</div>}
@@ -78,6 +98,18 @@ function Register({ setUser }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Digite seu e-mail"
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label>Telefone</label>
+
+            <input
+              type="tel"
+              placeholder="(11) 99999-9999"
+              value={telefone}
+              onChange={(e) => setTelefone(e.target.value)}
               required
             />
           </div>
@@ -136,4 +168,3 @@ function Register({ setUser }) {
 }
 
 export default Register;
-

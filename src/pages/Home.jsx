@@ -5,20 +5,34 @@ import Schedule from "../components/Schedule";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import logo from "../assets/barberIMG.svg";
-
 import profA from "../assets/proFA.png";
 import profB from "../assets/proFB.png";
 import profC from "../assets/proFC.png";
 
 function Home({ user, setUser }) {
+  const getShortName = (fullName) => {
+    if (!fullName) return "";
+
+    const names = fullName.trim().split(/\s+/);
+
+    if (names.length === 1) {
+      return names[0];
+    }
+
+    const firstName = names[0];
+    const lastNameInitial = names[names.length - 1].charAt(0).toUpperCase();
+
+    return `${firstName} ${lastNameInitial}.`;
+  };
   const [selectedServices, setSelectedServices] = useState({});
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedProfessional, setSelectedProfessional] = useState("Carlos Silva");
+  const [selectedProfessional, setSelectedProfessional] =
+    useState("Carlos Silva");
   const [date, setDate] = useState(new Date());
   const [reservas, setReservas] = useState([]);
 
   const handleServiceChange = (category, option) => {
-    setSelectedServices(prev => ({ ...prev, [category]: option }));
+    setSelectedServices((prev) => ({ ...prev, [category]: option }));
   };
 
   const times = Array.from({ length: 10 }, (_, i) => {
@@ -28,11 +42,11 @@ function Home({ user, setUser }) {
       value: timeString,
       label: timeString,
       reserved: reservas.some(
-        r =>
+        (r) =>
           r.professional === selectedProfessional &&
           r.date === date.toDateString() &&
-          r.time === timeString
-      )
+          r.time === timeString,
+      ),
     };
   });
 
@@ -50,7 +64,7 @@ function Home({ user, setUser }) {
       professional: selectedProfessional,
       date: date.toDateString(),
       time: selectedTime,
-      services: { ...selectedServices }
+      services: { ...selectedServices },
     };
 
     setReservas([...reservas, newBooking]);
@@ -61,41 +75,43 @@ function Home({ user, setUser }) {
       Horário: ${newBooking.time}\n
       Serviços: ${Object.values(selectedServices).join(", ") || "Nenhum"}`);
   };
-
   return (
     <div className="home-container">
       <div className="app-card">
         <div className="top-bar">
           {user ? (
-            <button className="login-btn-top" onClick={() => setUser(null)}>
-              🚪 Sair
-            </button>
+            <>
+              <span className="user-name-top">{getShortName(user)}</span>
+
+              <button className="login-btn-top" onClick={() => setUser(null)}>
+                🚪 Sair
+              </button>
+            </>
           ) : (
             <>
-              <Link to="/login" className="login-btn-top">👤 Login &gt;</Link>
-              <Link to="/register" className="login-btn-top">📝 Cadastre-se &gt;</Link>
+              <Link to="/login" className="login-btn-top">
+                👤 Login &gt;
+              </Link>
+
+              <Link to="/register" className="login-btn-top">
+                📝 Cadastre-se &gt;
+              </Link>
             </>
           )}
         </div>
+        <header>
+          <img src={logo} alt="Barber Flow" className="logo" />
+          <p className="subtitle">EST. 1966</p>
 
-       <header>
-  <img src={logo} alt="Barber Flow" className="logo" />
-  <p className="subtitle">EST. 1966</p>
-  
-  {/* Mensagem exibida logo abaixo do EST. 1966 quando o usuário estiver logado */}
- 
-</header>
-
-        {user && <div className="welcome">Bem-vindo, {user}</div>}
-
+          {/* Mensagem exibida logo abaixo do EST. 1966 quando o usuário estiver logado */}
+        </header>
         {/* Serviços */}
         <div className="services-grid">
-  <ServiceSelector 
-    selectedServices={selectedServices} 
-    onSelectService={handleServiceChange} 
-  />
-</div>
-
+          <ServiceSelector
+            selectedServices={selectedServices}
+            onSelectService={handleServiceChange}
+          />
+        </div>
         {/* Profissionais */}
         <div className="professionals-tabs">
           <div
@@ -120,7 +136,6 @@ function Home({ user, setUser }) {
             <span>João "Detalhista" Santos</span>
           </div>
         </div>
-
         {/* Calendário e Horários */}
         <div className="calendar-container">
           <Calendar
@@ -130,7 +145,9 @@ function Home({ user, setUser }) {
             tileDisabled={({ date }) => date.getDay() === 1}
             tileClassName={({ date }) => {
               if (date.getDay() === 1) return "dia-bloqueado";
-              const booked = reservas.some(r => r.date === date.toDateString());
+              const booked = reservas.some(
+                (r) => r.date === date.toDateString(),
+              );
               return booked ? "dia-ocupado" : null;
             }}
           />
