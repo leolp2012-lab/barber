@@ -101,9 +101,9 @@ function Home({ user, setUser }) {
         </div>
         <header>
           <img src={logo} alt="Barber Flow" className="logo" />
-          <p className="subtitle">EST. 1966</p>
+          <p className="subtitle">EST. 2026</p>
 
-          {/* Mensagem exibida logo abaixo do EST. 1966 quando o usuário estiver logado */}
+          {/* Mensagem exibida logo abaixo do EST. 2026 quando o usuário estiver logado */}
         </header>
         {/* Serviços */}
         <div className="services-grid">
