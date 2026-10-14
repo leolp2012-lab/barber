@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ServiceSelector from "../components/ServiceSelector";
 import Schedule from "../components/Schedule";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import logo from "../assets/barberIMG.svg";
-import profA from "../assets/proFA.png";
-import profB from "../assets/proFB.png";
-import profC from "../assets/proFC.png";
 
 function Home({ user, setUser }) {
   const getShortName = (fullName) => {
@@ -24,12 +21,36 @@ function Home({ user, setUser }) {
 
     return `${firstName} ${lastNameInitial}.`;
   };
+
   const [selectedServices, setSelectedServices] = useState({});
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedProfessional, setSelectedProfessional] =
-    useState("Carlos Silva");
+
+  // Estado para armazenar os profissionais vindos do banco de dados (API)
+  const [profissionais, setProfissionais] = useState([]);
+  const [selectedProfessional, setSelectedProfessional] = useState(null);
+
   const [date, setDate] = useState(new Date());
   const [reservas, setReservas] = useState([]);
+
+  // Busca os profissionais cadastrados no backend ao carregar a tela
+  useEffect(() => {
+    async function carregarProfissionais() {
+      try {
+        const resposta = await fetch("http://localhost:3000/profissionais");
+        const dados = await resposta.json();
+        setProfissionais(dados);
+
+        // Seleciona o primeiro profissional automaticamente por padrão
+        if (dados && dados.length > 0) {
+          setSelectedProfessional(dados[0].nome);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar profissionais:", error);
+      }
+    }
+
+    carregarProfissionais();
+  }, []);
 
   const handleServiceChange = (category, option) => {
     setSelectedServices((prev) => ({ ...prev, [category]: option }));
@@ -75,6 +96,7 @@ function Home({ user, setUser }) {
       Horário: ${newBooking.time}\n
       Serviços: ${Object.values(selectedServices).join(", ") || "Nenhum"}`);
   };
+
   return (
     <div className="home-container">
       <div className="app-card">
@@ -102,40 +124,48 @@ function Home({ user, setUser }) {
         <header>
           <img src={logo} alt="Barber Flow" className="logo" />
           <p className="subtitle">EST. 2026</p>
-
-          {/* Mensagem exibida logo abaixo do EST. 2026 quando o usuário estiver logado */}
         </header>
-        {/* Serviços */}
+
+        {/* Seção de Serviços */}
         <div className="services-grid">
           <ServiceSelector
             selectedServices={selectedServices}
             onSelectService={handleServiceChange}
           />
         </div>
-        {/* Profissionais */}
+
+        {/* TÍTULO DA SEÇÃO PROFISSIONAIS */}
+        <h2 className="section-title">PROFISSIONAIS</h2>
+
+        {/* LISTA DINÂMICA DE PROFISSIONAIS DO BANCO */}
         <div className="professionals-tabs">
-          <div
-            className={`prof-card ${selectedProfessional === "Carlos Silva" ? "active" : ""}`}
-            onClick={() => setSelectedProfessional("Carlos Silva")}
-          >
-            <img src={profA} alt="Carlos Silva" className="prof-img" />
-            <span>Carlos "Navalha de Ouro" Silva</span>
-          </div>
-          <div
-            className={`prof-card ${selectedProfessional === "Rafael Oliveira" ? "active" : ""}`}
-            onClick={() => setSelectedProfessional("Rafael Oliveira")}
-          >
-            <img src={profB} alt="Rafael Oliveira" className="prof-img" />
-            <span>Rafael "Mestre do Fade" Oliveira</span>
-          </div>
-          <div
-            className={`prof-card ${selectedProfessional === "João Santos" ? "active" : ""}`}
-            onClick={() => setSelectedProfessional("João Santos")}
-          >
-            <img src={profC} alt="João Santos" className="prof-img" />
-            <span>João "Detalhista" Santos</span>
-          </div>
+          {profissionais.length === 0 ? (
+            <p className="empty-msg">Nenhum profissional cadastrado.</p>
+          ) : (
+            profissionais.map((prof) => (
+              <div
+                key={prof.id}
+                className={`prof-card ${selectedProfessional === prof.nome ? "active" : ""}`}
+                onClick={() => setSelectedProfessional(prof.nome)}
+              >
+                <img
+                  src={prof.foto || "https://via.placeholder.com/100"}
+                  alt={prof.nome}
+                  className="prof-img"
+                />
+
+                {/* Nome com o mesmo estilo do título dos serviços (ex: Barba, Corte) */}
+                <span className="card-title">{getShortName(prof.nome)}</span>
+
+                {/* Especialidade com o mesmo estilo do valor dos serviços (ex: R$ 25) */}
+                <span className="card-price">
+                  {prof.especialidade || "Barbeiro"}
+                </span>
+              </div>
+            ))
+          )}
         </div>
+
         {/* Calendário e Horários */}
         <div className="calendar-container">
           <Calendar

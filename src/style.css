@@ -8,7 +8,8 @@
 
 body,
 button,
-input {
+input,
+textarea {
   font-family: "Poppins", sans-serif;
 }
 
@@ -17,168 +18,61 @@ body {
   color: #ffffff;
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Base de Containers */
 .home-container,
-.auth-container {
+.auth-container,
+.login-container {
   min-height: 100vh;
-  width: 100vw;
-  padding: 30px 15px 80px 15px;
+  width: 100%;
+  padding: 20px 15px 40px 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("./assets/fundo.png") no-repeat center center fixed;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+    url("./assets/fundo.png") no-repeat center center fixed;
   background-size: cover;
+  box-sizing: border-box;
 }
 
-/* Card de Login / Cadastro */
 .app-card,
-.auth-card {
+.auth-card,
+.login-card {
+  position: relative;
   width: 100%;
   max-width: 420px;
-  background: rgba(12, 12, 12, 0.92);
+  background: rgba(18, 18, 18, 0.95);
   border-radius: 20px;
-  padding: 28px 24px;
+  padding: 24px 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 193, 7, 0.2);
+  border: 1px solid rgba(255, 193, 7, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-}
-
-.auth-card h2 {
   color: #ffffff;
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 4px;
 }
 
-.subtitle-auth {
-  font-size: 12px;
-  color: #aaaaaa;
-  margin-bottom: 20px;
-}
-
-/* Formulário de Autenticação */
-.auth-card form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.auth-card .input-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.auth-card label {
-  font-size: 11px;
-  color: #ffc107;
-  font-weight: 600;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.auth-card input {
-  width: 100%;
-  height: 42px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 193, 7, 0.3);
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  font-size: 13px;
-  outline: none;
-  transition: all 0.2s ease;
-}
-
-.auth-card input:focus {
-  border-color: #ffc107;
-  background: rgba(255, 193, 7, 0.08);
-  box-shadow: 0 0 8px rgba(255, 193, 7, 0.25);
-}
-
-/* Container de Senha com o Olho Interno */
-.auth-card .password-container {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.auth-card .password-container input {
-  padding-right: 40px;
-}
-
-.auth-card .toggle-eye-btn {
-  position: absolute;
-  right: 12px;
-  background: none;
-  border: none;
-  color: #ffc107;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  outline: none;
-  opacity: 0.8;
-  transition: opacity 0.2s ease;
-}
-
-.auth-card .toggle-eye-btn:hover {
-  opacity: 1;
-}
-
-/* Botão de Envio */
-.auth-card .confirm-btn {
-  width: 100%;
-  height: 44px;
-  background: #ffc107;
-  color: #000000;
-  font-size: 13px;
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s ease;
-}
-
-.auth-card .confirm-btn:hover {
-  background: #e0a800;
-}
-
-/* Rodapé do Auth Card */
-.auth-card .footer-text {
-  font-size: 12px;
-  color: #cccccc;
-  margin-top: 18px;
-}
-
-.auth-card .footer-text a {
-  color: #ffc107;
-  font-weight: 600;
-  text-decoration: underline;
-}
-
-/* Header & Marca Principal */
+/* Header & Logos */
 .top-bar {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
-.auth-buttons-top {
-  display: flex;
-  gap: 8px;
+.user-name-top {
+  margin-right: 15px;
+  font-weight: 600;
 }
 
 .login-btn-top {
@@ -197,15 +91,10 @@ body {
   transition: all 0.2s ease;
 }
 
-.login-btn-top:hover {
-  background: rgba(255, 193, 7, 0.15);
-  border-color: #ffc107;
-}
-
 .logo {
-  width: 205px;
+  width: 180px;
   height: auto;
-  margin-bottom: -18px;
+  margin-bottom: -12px;
   display: block;
 }
 
@@ -219,158 +108,179 @@ body {
   transform: translateY(-4px);
 }
 
-.welcome {
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #ffc107;
-  letter-spacing: 0.5px;
+.back-arrow {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  color: #ffc107 !important;
+  font-size: 22px;
+  text-decoration: none !important;
+  font-weight: bold;
 }
 
 /* Títulos das Seções */
 .section-title,
-.app-card h4,
-.schedule h3 {
-  color: #ffc107;
-  font-size: 13px;
-  font-weight: 700;
+.service-register-title {
+  color: #ffc107 !important;
+  font-size: 1.1rem !important;
+  font-weight: 800 !important;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
-  margin: 26px 0 16px;
+  letter-spacing: 2px;
   text-align: center;
   display: block;
   width: 100%;
+  margin: 22px 0 14px !important;
 }
 
-.services-grid {
+/* ========================================================= */
+/* 1. HOME: CARDS DE SERVIÇOS (LADO A LADO QUADRADOS)        */
+/* ========================================================= */
+.services-grid,
+.services-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin: 10px 0;
+  margin-top: 10px;
 }
 
+.cards-grid,
+.square-grid,
+.service-options,
 .service-category {
-  margin-bottom: 16px;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
   width: 100%;
 }
 
-.service-options,
-.square-grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
+.service-card,
 .square-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  width: 100px;
-  height: 100px;
-  border-radius: 6px;
-  background-color: rgba(24, 24, 27, 0.9);
-  color: #f4f4f5;
-  border: 1px solid #3f3f46;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 12px 8px !important;
+  background: #18181b !important;
+  border: 1px solid #27272a !important;
+  border-radius: 16px !important;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  padding: 0;
+  transition: all 0.25s ease;
+  width: 110px !important;
+  min-height: 135px !important;
 }
 
-.square-btn .btn-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  gap: 8px;
+.service-card:hover,
+.square-btn:hover {
+  border-color: #ffc107 !important;
 }
 
-.square-btn:hover,
+.service-card.selected,
 .square-btn.selected {
-  background-color: #d97706;
-  color: #000000;
-  border-color: #d97706;
-  font-weight: 700;
-  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+  background: rgba(255, 193, 7, 0.12) !important;
+  border: 1px solid #ffc107 !important;
+  box-shadow: 0 0 12px rgba(255, 193, 7, 0.25) !important;
 }
 
+.card-icon,
 .square-btn .icon {
   font-size: 24px;
-  line-height: 1;
+  color: #ffc107;
+  margin-bottom: 2px;
 }
 
+.card-title,
 .square-btn .label {
   font-size: 12px;
-  text-transform: capitalize;
+  font-weight: 700;
+  color: #ffffff;
   text-align: center;
+  margin: 2px 0;
 }
 
-.category-title {
-  color: #d97706;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 12px;
-  text-align: center;
+.card-time {
+  font-size: 10px;
+  color: #a1a1aa;
 }
 
-/* Profissionais */
+.card-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffc107;
+}
+
+/* ========================================================= */
+/* 2. HOME: CARDS DE PROFISSIONAIS                           */
+/* ========================================================= */
 .professionals-tabs {
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin: 15px 0;
+  align-items: stretch;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 .prof-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   cursor: pointer;
-  padding: 8px 4px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-  width: 100px;
+  padding: 12px 8px;
+  background: #18181b;
+  border-radius: 16px;
+  border: 1px solid #27272a;
+  transition: all 0.25s ease;
+  width: 110px;
+  min-height: 145px;
 }
 
-.prof-card:hover,
+.prof-card:hover {
+  border-color: #ffc107;
+}
+
 .prof-card.active {
   border: 1px solid #ffc107;
   background: rgba(255, 193, 7, 0.12);
+  box-shadow: 0 0 12px rgba(255, 193, 7, 0.25);
 }
 
 .prof-img {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 66px;
   object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 6px;
-  border: 2px solid #ffc107;
+  border-radius: 6px;
+  border: 1.5px solid #ffc107;
 }
 
-.prof-card span {
-  font-size: 10px;
-  color: #fff;
-  line-height: 1.2;
+.prof-card .card-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
 }
 
-/* Calendário & Horários */
+.prof-card .card-price {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffc107;
+  text-align: center;
+}
+
+/* ========================================================= */
+/* 3. CALENDÁRIO & HORÁRIOS                                  */
+/* ========================================================= */
 .calendar-container {
   width: 100%;
   margin-top: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .react-calendar {
@@ -385,7 +295,7 @@ body {
 .react-calendar__navigation button {
   color: #ffc107 !important;
   background: none;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .react-calendar__month-view__weekdays {
@@ -399,24 +309,27 @@ body {
   border-radius: 6px;
   padding: 8px 0 !important;
   font-size: 12px;
+  background: transparent !important;
 }
 
+.react-calendar__tile:disabled,
 .dia-bloqueado {
-  background: #a71d1d !important;
-  color: #fff !important;
-  border-radius: 50%;
+  background: rgba(167, 29, 29, 0.2) !important;
+  color: #ef4444 !important;
+  border-radius: 6px !important;
 }
+
 .dia-ocupado {
   background: #ffc107 !important;
   color: #000 !important;
   font-weight: bold;
-  border-radius: 50%;
+  border-radius: 6px !important;
 }
 
 .time-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
+  gap: 6px;
   width: 100%;
 }
 
@@ -424,639 +337,224 @@ body {
   background: rgba(255, 255, 255, 0.05);
   color: #ffc107;
   border: 1px solid #ffc107;
-  padding: 4px 8px;
+  padding: 6px 4px;
   border-radius: 6px;
   font-size: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
 .time-btn.selected {
-  background: #007bff !important;
-  color: #ffffff !important;
-  border-color: #007bff !important;
+  background: #ffc107 !important;
+  color: #000000 !important;
   font-weight: bold;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
 }
 
-.time-btn:disabled {
-  background: rgba(255, 255, 255, 0.03) !important;
-  color: #555555 !important;
-  border-color: #333333 !important;
-  cursor: not-allowed;
-  text-decoration: line-through;
-}
-
-.confirm-btn {
+/* ========================================================= */
+/* 4. TELA CADASTRAR SERVIÇO                                 */
+/* ========================================================= */
+.service-register-card .registered-services {
   width: 100%;
-  background: #ffc107;
-  color: #000;
+  margin-top: 24px;
+}
+
+.service-register-card .registered-services h3 {
+  color: #ffc107;
   font-size: 12px;
-  font-weight: bold;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-top: 15px;
-  transition: background 0.3s ease;
-}
-
-.confirm-btn:hover {
-  background: #e0a800;
-}
-
-/* Garante que o card seja o container relativo para a seta */
-.auth-card {
-  position: relative;
-}
-
-.auth-card .back-btn {
-  position: absolute;
-  top: 18px;
-  left: 20px;
-  color: #ffc107;
-  font-size: 22px;
-  font-weight: bold;
-  text-decoration: none;
-  line-height: 1;
-  opacity: 0.8;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.auth-card .back-btn:hover {
-  opacity: 1;
-  transform: translateX(-3px);
-}
-
-.auth-card {
-  position: relative;
-}
-
-.auth-card .back-btn {
-  position: absolute;
-  top: 18px;
-  left: 20px;
-  color: #ffc107;
-  font-size: 22px;
-  font-weight: bold;
-  text-decoration: none;
-  line-height: 1;
-  opacity: 0.8;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.auth-card .back-btn:hover {
-  opacity: 1;
-  transform: translateX(-3px);
-}
-
-.services-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-  margin: 15px 0;
-}
-
-.category-header {
-  color: #ffc107;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-/* Grid responsivo de Cards */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 12px;
-  justify-content: center;
-}
-
-/* Card Individual */
-.service-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 8px;
-  background: rgba(20, 20, 20, 0.85);
-  border: 1px solid rgba(255, 193, 7, 0.2);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(4px);
-}
-
-.card-icon {
-  font-size: 22px;
-  margin-bottom: 4px;
-}
-
-.card-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 2px;
-  text-align: center;
-}
-
-.card-time {
-  font-size: 10px;
-  color: #888888;
-  margin-bottom: 6px;
-}
-
-.card-price {
-  font-size: 12px;
-  font-weight: 700;
-  color: #ffc107;
-}
-
-/* Estado Selecionado com Realce e Brilho Dourado */
-.service-card:hover {
-  border-color: rgba(255, 193, 7, 0.6);
-  transform: translateY(-2px);
-}
-
-.service-card.selected {
-  background: rgba(255, 193, 7, 0.15);
-  border: 1px solid #ffc107;
-  box-shadow: 0 0 15px rgba(255, 193, 7, 0.25);
-  transform: translateY(-2px);
-}
-
-/* Card centralizado do Login/Cadastro */
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.login-card {
-  position: relative;
-  background: rgba(18, 18, 18, 0.95);
-  border: 1px solid rgba(255, 193, 7, 0.25);
-  border-radius: 16px;
-  padding: 35px 30px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
-  color: #ffffff;
-}
-
-/* Formulário e alinhamento dos campos em coluna */
-.login-card form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  width: 100%;
-}
-
-.input-group label {
-  font-size: 11px;
-  font-weight: 700;
-  color: #ffc107;
-  letter-spacing: 1px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 12px 14px;
-  background: #141414;
-  border: 1px solid #333333;
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 14px;
-  outline: none;
-  box-sizing: border-box; /* Impede que o input saia do limite da caixa */
-}
-
-.input-group input:focus {
-  border-color: #ffc107;
-  box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
-}
-
-.confirm-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background: #ffc107;
-  border: none;
-  border-radius: 8px;
-  color: #000000;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.confirm-btn:hover {
-  background: #e0a800;
-}
-
-/* Container das Telas de Login e Cadastro */
-
-/* Card Escuro */
-.login-card {
-  position: relative;
-  background: #121212;
-  border: 1px solid rgba(255, 193, 7, 0.25);
-  border-radius: 16px;
-  padding: 35px 30px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
-  color: #ffffff;
-}
-
-/* Seta de Voltar */
-.back-arrow {
-  position: absolute;
-  top: 18px;
-  left: 20px;
-  color: #ffc107 !important;
-  font-size: 22px;
-  text-decoration: none !important;
-  font-weight: bold;
-  transition: transform 0.2s ease;
-}
-
-.back-arrow:hover {
-  transform: translateX(-3px);
-}
-
-/* Formulário e Inputs */
-.login-card form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  width: 100%;
-}
-
-.input-group label {
-  font-size: 11px;
-  font-weight: 700;
-  color: #ffc107;
-  letter-spacing: 1px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 12px 14px;
-  background: #141414;
-  border: 1px solid #333333;
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 14px;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.input-group input:focus {
-  border-color: #ffc107;
-  box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
-}
-
-/* Wrapper do Campo de Senha com Olhinho */
-.password-wrapper {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.password-wrapper input {
-  padding-right: 40px;
-}
-
-.toggle-eye {
-  position: absolute;
-  right: 12px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-}
-
-.toggle-eye:focus {
-  outline: none;
-}
-
-/* Botão Confirmar */
-.confirm-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background: #ffc107;
-  border: none;
-  border-radius: 8px;
-  color: #000000;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.confirm-btn:hover {
-  background: #e0a800;
-}
-
-/* Links do Rodapé */
-.footer-text {
-  margin-top: 20px;
-  font-size: 13px;
-  color: #a1a1aa;
-}
-
-.footer-text a {
-  color: #ffc107 !important;
-  text-decoration: none !important;
-  font-weight: 600;
-}
-
-.footer-text a:hover {
-  text-decoration: underline !important;
-}
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100%;
-  padding: 20px;
-  /* CAMINHO EXATO DA SUA ESTRUTURA */
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
-    url("./assets/barberIMG.svg") center/cover no-repeat fixed;
-  box-sizing: border-box;
-}
-
-/* Container das Telas de Login e Cadastro */
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100%;
-  padding: 20px;
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
-    url("./assets/barberIMG.svg") center/cover no-repeat fixed;
-  box-sizing: border-box;
-}
-
-/* Card Escuro */
-.login-card {
-  position: relative;
-  background: #121212;
-  border: 1px solid rgba(255, 193, 7, 0.25);
-  border-radius: 16px;
-  padding: 35px 30px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
-  color: #ffffff;
-}
-
-/* Seta de Voltar */
-.back-arrow {
-  position: absolute;
-  top: 18px;
-  left: 20px;
-  color: #ffc107 !important;
-  font-size: 22px;
-  text-decoration: none !important;
-  font-weight: bold;
-  transition: transform 0.2s ease;
-}
-
-.back-arrow:hover {
-  transform: translateX(-3px);
-}
-
-/* Formulário e Inputs */
-.login-card form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  width: 100%;
-}
-
-.input-group label {
-  font-size: 11px;
-  font-weight: 700;
-  color: #ffc107;
-  letter-spacing: 1px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 12px 14px;
-  background: #141414;
-  border: 1px solid #333333;
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 14px;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.input-group input:focus {
-  border-color: #ffc107;
-  box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
-}
-
-/* Wrapper do Campo de Senha com Olhinho */
-.password-wrapper {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.password-wrapper input {
-  padding-right: 40px;
-}
-
-.toggle-eye {
-  position: absolute;
-  right: 12px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-}
-
-.toggle-eye:focus {
-  outline: none;
-}
-
-/* Botão Confirmar */
-.confirm-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background: #ffc107;
-  border: none;
-  border-radius: 8px;
-  color: #000000;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.confirm-btn:hover {
-  background: #e0a800;
-}
-
-/* Links do Rodapé */
-.footer-text {
-  margin-top: 20px;
-  font-size: 13px;
-  color: #a1a1aa;
-}
-
-.footer-text a {
-  color: #ffc107 !important;
-  text-decoration: none !important;
-  font-weight: 600;
-}
-
-.footer-text a:hover {
-  text-decoration: underline !important;
-}
-
-/* Banner de Erro Profissional */
-.error-banner {
-  background-color: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  color: #ef4444;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  margin-top: 15px;
-  text-align: center;
-}
-
-/*CADASTRO DE SERVIÇO*/
-
-.service-register-card {
-  max-width: 420px;
-  padding: 25px 24px 30px;
-}
-
-.service-register-card .logo {
-  width: 180px;
-  margin-bottom: -12px;
-}
-
-.service-register-title {
-  color: #ffc107;
-  font-size: 15px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  margin-top: 12px;
-  margin-bottom: 5px;
   text-align: center;
+  margin-bottom: 12px;
+  text-transform: uppercase;
 }
 
-.service-register-subtitle {
-  color: #888888;
-  font-size: 11px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.service-register-card form {
+.service-register-card .registered-services-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   width: 100%;
 }
 
-.service-register-card .input-group {
+.service-register-card .registered-service-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 193, 7, 0.18);
+  border-radius: 10px;
+}
+
+.service-register-card .registered-service-icon {
+  color: #ffc107;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.service-register-card .registered-service-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+
+.service-register-card .registered-service-info strong {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.service-register-card .registered-service-info span {
+  color: #888888;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.service-register-card .registered-service-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.service-register-card .registered-service-details span {
+  color: #ffc107;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ========================================================= */
+/* 5. TELA CADASTRAR PROFISSIONAL (ISOLADA)                   */
+/* ========================================================= */
+.prof-registered-section {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.prof-registered-section h3 {
+  color: #ffc107;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.prof-registered-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.prof-registered-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 193, 7, 0.2);
+  border-radius: 12px;
+}
+
+.prof-registered-photo-box {
+  flex-shrink: 0;
+}
+
+.prof-registered-photo-3x4 {
+  width: 48px !important;
+  height: 64px !important;
+  object-fit: cover !important;
+  border-radius: 6px;
+  border: 1.5px solid #ffc107;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  display: block;
+}
+
+.prof-registered-photo-placeholder {
+  width: 48px;
+  height: 64px;
+  background: #18181b;
+  border: 1.5px solid rgba(255, 193, 7, 0.4);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #ffc107;
+}
+
+.prof-registered-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+
+.prof-registered-info strong {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.prof-registered-specialty {
+  color: #ffc107;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.prof-registered-desc {
+  color: #a1a1aa;
+  font-size: 10px;
+  margin-top: 4px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+/* Formmats e Botões Gerais */
+.input-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
   width: 100%;
+  margin-bottom: 12px;
 }
 
-.service-register-card .input-group label {
-  color: #ffc107;
-  font-size: 10px;
+.input-group label {
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1px;
+  color: #ffc107;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
-.service-register-card .input-group input {
+.input-group input,
+.input-group textarea {
   width: 100%;
-  height: 42px;
-  padding: 0 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 193, 7, 0.25);
+  padding: 10px 12px;
+  background: #141414;
+  border: 1px solid #333333;
   border-radius: 8px;
   color: #ffffff;
-  font-family: "Poppins", sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   outline: none;
-  transition: all 0.2s ease;
 }
 
-.service-register-card .input-group input::placeholder {
-  color: #666666;
-}
-
-.service-register-card .input-group input:focus {
+.input-group input:focus,
+.input-group textarea:focus {
   border-color: #ffc107;
-  background: rgba(255, 193, 7, 0.06);
-  box-shadow: 0 0 8px rgba(255, 193, 7, 0.25);
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
 }
 
 .service-fields-row {
@@ -1066,128 +564,192 @@ body {
   width: 100%;
 }
 
-.service-register-card .confirm-btn {
-  height: 44px;
-  margin-top: 5px;
+.confirm-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
   background: #ffc107;
-  color: #000000;
   border: none;
   border-radius: 8px;
-  font-size: 12px;
+  color: #000000;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  font-size: 13px;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.service-register-card .confirm-btn:hover {
+.confirm-btn:hover {
   background: #e0a800;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.25);
+}
+/* ========================================================= */
+/* TÍTULOS DE SEÇÃO PADRONIZADOS E COM ESPAÇAMENTO (HOME)    */
+/* ========================================================= */
+.section-title,
+.service-category h3,
+.category-title {
+  color: #ffffff !important; /* Tom branco idêntico ao SERVIÇOS */
+  font-family: "Poppins", sans-serif !important;
+  font-size: 13px !important; /* Mesmo tamanho discreto */
+  font-weight: 700 !important; /* Mesmo peso */
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important; /* Mesmo espaçamento de letras */
+  text-align: center !important;
+  display: block !important;
+  width: 100% !important;
+  margin-top: 24px !important; /* Separa do topo / logo */
+  margin-bottom: 16px !important; /* DÁ O RESPIRO ENTRE O TÍTULO E OS CARDS */
 }
 
-/* Serviços cadastrados */
-
-.registered-services {
+/* Afasta o bloco de serviços da logo no topo */
+.services-grid,
+.services-container {
   width: 100%;
-  margin-top: 25px;
-}
-
-.registered-services h3 {
-  color: #ffc107;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.registered-services-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-
-.registered-service-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 193, 7, 0.18);
-  border-radius: 10px;
-  transition: all 0.2s ease;
-}
-
-.registered-service-card:hover {
-  border-color: rgba(255, 193, 7, 0.5);
-  background: rgba(255, 193, 7, 0.07);
-}
-
-.registered-service-icon {
-  color: #ffcc00;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.registered-service-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1;
-  min-width: 0;
-}
-
-.registered-service-info strong {
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.registered-service-info > span {
-  color: #777777;
-  font-size: 9px;
-  margin-top: 2px;
-}
-
-.registered-service-details {
-  display: flex;
   gap: 12px;
-  margin-top: 4px;
-}
-
-.registered-service-details span {
-  color: #ffc107;
-  font-size: 9px;
-  font-weight: 600;
-}
-
-.empty-services {
-  color: #777777;
-  font-size: 10px;
-  text-align: center;
-}
-/* Corrige rolagem lateral da Home */
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-.user-name-top {
-  margin-right: 15px;
-  font-weight: 600;
-}
-.card-icon {
-  color: #ffcc00;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: 6px; /* Espaço sutil após o título */
   margin-bottom: 10px;
+}
+
+/* ========================================================= */
+/* AFASSTAMENTO DO TÍTULO "SERVIÇOS" DOS CARDS (HOME)        */
+/* ========================================================= */
+
+/* Garante o respiro do título interno do ServiceSelector */
+.services-grid h3,
+.services-grid h4,
+.services-container h3,
+.service-category h3,
+.service-category h4,
+.category-title,
+.services-title {
+  color: #ffffff !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  text-align: center !important;
+  display: block !important;
+  width: 100% !important;
+  margin-top: 20px !important; /* Espaço entre a logo e o título */
+  margin-bottom: 16px !important; /* AFASSTA O TÍTULO DOS CARDS ABAIXO */
+}
+
+/* Garante espaço entre a logo/subtitle "EST. 2026" e a área de serviços */
+.services-grid {
+  margin-top: 10px !important;
+}
+
+/* Garante o respiro para os cards alinhados */
+.cards-grid,
+.square-grid,
+.service-options {
+  margin-top: 8px !important;
+}
+
+/* ========================================================= */
+/* CORREÇÃO DA TELA DE LOGIN & CADASTRO (INPUTS E LINKS)    */
+/* ========================================================= */
+
+/* Wrapper da senha para alinhar o campo e o botão na mesma linha */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px !important; /* Espaço para o ícone não cobrir o texto */
+}
+
+/* Botão de alternar visibilidade da senha (Olho/Macaco) */
+.toggle-eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+
+/* Estilização do rodapé e links de navegação */
+.footer-text {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+.footer-text a {
+  color: #ffc107 !important; /* Amarelo/Dourado padronizado */
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-text a:hover {
+  text-decoration: underline;
+  color: #e0a800 !important;
+}
+
+/* ========================================================= */
+/* RESPIRO E ESPAÇAMENTO DA TELA DE LOGIN & REGISTRO         */
+/* ========================================================= */
+
+.login-card h2,
+.auth-card h2 {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 6px !important; /* Espaço sutil abaixo do título Entrar */
+}
+
+.login-card .subtitle,
+.auth-card .subtitle {
+  font-size: 12px;
+  color: #ffc107;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px !important; /* AFASSTA O SUBTÍTULO DOS CAMPOS ABAIXO */
+  line-height: 1.4;
+}
+
+/* Espaçamento entre os campos de entrada */
+.login-card form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espaço uniforme entre e-mail, senha e botão */
+}
+
+/* ========================================================= */
+/* FIX DEFINITIVO: DIA SELECIONADO NO CALENDÁRIO             */
+/* ========================================================= */
+
+/* Seleção do dia ativo com especificidade máxima */
+.calendar-container .react-calendar .react-calendar__tile--active,
+.calendar-container .react-calendar .react-calendar__tile--active:enabled:hover,
+.calendar-container .react-calendar .react-calendar__tile--active:enabled:focus,
+.react-calendar__tile.react-calendar__tile--active {
+  background: #ffc107 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 12px rgba(255, 193, 7, 0.6) !important;
+}
+
+/* Efeito ao passar o mouse sobre os dias normais */
+.calendar-container .react-calendar .react-calendar__tile:enabled:hover,
+.calendar-container .react-calendar .react-calendar__tile:enabled:focus {
+  background: rgba(255, 193, 7, 0.2) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
 }

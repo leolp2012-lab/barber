@@ -75,10 +75,6 @@ function Servico() {
 
         <h2 className="service-register-title">CADASTRAR SERVIÇO</h2>
 
-        <p className="service-register-subtitle">
-          Adicione um novo serviço à barbearia
-        </p>
-
         <form onSubmit={cadastrarServico}>
           <div className="input-group">
             <label>Nome do serviço</label>

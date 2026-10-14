@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Servico from "./pages/Servico";
+import Profissionais from "./pages/Profissionais";
 import { useState } from "react";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/register" element={<Register setUser={setUser} />} />
         <Route path="/servicos" element={<Servico />} />
+        <Route path="/profissionais" element={<Profissionais />} />{" "}
       </Routes>
     </Router>
   );
